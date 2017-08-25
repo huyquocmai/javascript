@@ -633,7 +633,7 @@ const factorial = (n) => recur(n)(1)
 
 # 9.0 Function Type Signature Documentation (Hindley-Milner)
 You should document all functions with Hindley-Milner annotation, it is the prevalent type signature documentation in functional languages (Haskell, Elm, OCaml, etc.) and it just makes a lot of sense to use it in functional Javascript.
-```
+```javascript
 // functionName :: type -> type -> type
 
 // add :: Number -> Number -> Number
@@ -668,7 +668,7 @@ const returnOne = () => 1
 
 As seen above, we do not use `Array` in function signatures, even though this is a proper type in Javascript. Instead we use the square bracket notation `[type]` to indicate, not only that we expect an array, but to indicate the type of the elements it contains.
 
-```
+```javascript
 // sum :: [Number] -> Number
 const sum = numberArray => numberArray.reduce((x, y) => x + y, 0)
 
@@ -681,7 +681,7 @@ const sum = numberArray => numberArray.reduce((x, y) => x + y, 0)
 
 A polymorphic function is a function which has at least one argument that can be of any type. To indicate a polymorphic type, we denote it by a variable.
 
-```
+```javascript
 // The identity function is polymorphic, but its return type matches its argument type
 
 // id :: a -> a
@@ -703,7 +703,7 @@ const flip = f => b => a => f(a)(b)
 
 Notice that the type `Object` is sometimes not meaningful enough since we might require that an object has some specific attribute.
 
-```
+```javascript
 // for a merge function it is accurate to us Object as type
 
 // merge :: Object -> Object -> Object
@@ -717,7 +717,7 @@ const selectPersonName = obj => obj.name
 
 To be more explicit, we replace `Object` by a name that accurately represents what the object structure is expected to be.
 
-```
+```javascript
 // bad
 // update :: Object -> Object
  const selectAccountSummary = a => ({
@@ -741,7 +741,7 @@ If renaming `Object` is not clear enough in the context, it is possible to add a
 
 The purpose of renaming the `Object` type is to give information about its structure and the attributes it contains. It should not be done to define what the object represents. Thus, renaming should not be used for types other than `Object`, because their structure is already well-defined. Furthermore renaming non-object types can create confusion.
 
-```
+```javascript
 // bad
 
 // Here, renaming Number to Price may lead to think Price is an Object and not a Number
@@ -760,7 +760,7 @@ Parentheses in Hindley-Milner notation can play three roles, of which only two a
 
 First of all, parentheses will denote tuples of arguments for uncurried functions. Arguments as tuples indicate that the function cannot be partially applied. In functional Javascript, you generally want to avoid uncurried functions.
 
-```
+```javascript
 // uncurriedAdd :: (Number, Number) -> Number
 const uncurriedAdd = (x, y) -> x + y
 
@@ -770,7 +770,7 @@ uncurriedAdd(1)
 
 A common use of parentheses is also to enclose functions, i.e. to state that the argument you expect is a function with the given enclosed signature.
 
-```
+```javascript
 // The first argument is expected to be of type (a -> b)
 // so it would be incorrect to omit the parentheses.
 
@@ -780,7 +780,7 @@ const apply = f => x => f(x)
 
 Finally, while this final case is optional, parentheses can be used to encourage the user to partially apply a function. Indeed some functions such as `curry` are rarely, if ever, fully evaluated.
 
-```
+```javascript
 // Both signatures are correct, but the second one indicates to the user
 // that curry should be partially applied to return a function to be reused later
 
@@ -797,7 +797,7 @@ const curry = f => x => y => f(x, y)
 
 Partial application is when you give some of its arguments to a function to return a function that takes fewer arguments. The process of making a function partially applicable is also referred as currying.
 
-```
+```javascript
 // add :: Number -> Number -> Number
 const add = x => y => x + y
 
@@ -813,7 +813,7 @@ addTwo(5) //=> 7
 
 Always keep in mind that partial application of a function does not partially evaluate it. All computations, however heavy they may be, are executed only once all arguments have been provided. Partial evaluation is a good way to improve partially applied functions by precomputing as much as possible with the given arguments.
 
-```
+```javascript
 // This function can be partially applied, but is not partially evaluated
 // addThenMultiply :: Number -> Number -> Number -> Number
 const addThenMultiply = x => y => z => (x + y) * z
@@ -836,7 +836,7 @@ const betterMultiplyFour = betterAddThenMultiply(2)(2)
 
 The purpose of the previous example is to introduce the concept of partial evaluation. Although, this example is hardly faster in practice since saving a single arithmetic operation is negligible. Let's consider a more meaningful example where partial evaluation gives a significant advantage.
 
-```
+```javascript
 // filterArraysThenConcat :: (a -> Boolean) -> [a] -> [a] -> [a]
 const filterArraysThenConcat = myFilter => firstArray => {
   const filteredFirstArray = firstArray.filter(myFilter)
